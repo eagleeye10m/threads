@@ -13,7 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
+import { useOrganization } from "@clerk/nextjs";
 import { Textarea } from "../ui/textarea";
 //import { updateUser } from "@/lib/actions/user.action";
 import { usePathname, useRouter } from "next/navigation";
@@ -26,7 +26,7 @@ interface Props {
 function PostThread({ userId }: Props) {
   const router = useRouter();
   const pathname = usePathname();
-  console.log(userId);
+  const {organization}=useOrganization();
 
   const form = useForm<z.infer<typeof threadValidation>>({
     resolver: zodResolver(threadValidation),
@@ -37,12 +37,23 @@ function PostThread({ userId }: Props) {
   });
 
   const onSubmit = async (values: z.infer<typeof threadValidation>) => {
-    await createThread({
-      text: values.thread,
-      author: userId,
-      communityId: null,
-      path: pathname,
-    });
+
+    const timestamp = Date.now();
+console.log(timestamp); // Outputs something like: 1624376400000
+
+const date = new Date(timestamp);
+console.log(date.toUTCString()); // Outputs something like: Tue, 22 Jun 2021 14:00:00 GMT
+console.log(date.toISOString()); // Outputs something like: 2021-06-22T14:00:00.000Z
+
+        await createThread({
+          text: values.thread,
+          author: userId,
+          communityId: organization ? organization.id : null,
+          path: pathname,
+        });
+      
+   
+
 
     router.push("/");
   };
