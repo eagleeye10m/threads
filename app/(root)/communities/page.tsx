@@ -11,7 +11,6 @@ import CommunityCard from "@/components/cards/CommunityCard";
 
 async function page() {
   const user = await currentUser();
-
   if (!user) redirect("/sign-in");
 
   const userInfo = await fetchUser(user.id);
