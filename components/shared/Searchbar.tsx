@@ -10,7 +10,7 @@ function Searchbar({ routeType }: Props) {
   const router = useRouter();
 
   console.log("re-render");
-  let debounce: any;
+  let debounce: NodeJS.Timeout;
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
@@ -38,7 +38,7 @@ function Searchbar({ routeType }: Props) {
       />
       <Input
         id="text"
-        onChange={(e) => handleChange}
+        onChange={handleChange}
         placeholder={`${
           routeType !== "search" ? "Search communities" : "Search creators"
         }`}
