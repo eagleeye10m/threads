@@ -2,14 +2,16 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Input } from "../ui/input";
-import { useState } from "react";
-
-function Searchbar({ routeType }) {
+import { ChangeEvent, useState } from "react";
+interface Props {
+  routeType: string;
+}
+function Searchbar({ routeType }: Props) {
   const router = useRouter();
 
   console.log("re-render");
-  let debounce;
-  const handleChange = (e) => {
+  let debounce: any;
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
     if (debounce) {
@@ -36,7 +38,7 @@ function Searchbar({ routeType }) {
       />
       <Input
         id="text"
-        onChange={handleChange}
+        onChange={(e) => handleChange}
         placeholder={`${
           routeType !== "search" ? "Search communities" : "Search creators"
         }`}
