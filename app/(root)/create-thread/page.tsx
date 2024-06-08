@@ -3,6 +3,7 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
+export const revalidate = 60;
 async function page() {
   const user = await currentUser();
 

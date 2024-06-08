@@ -5,8 +5,6 @@ import Searchbar from "@/components/shared/Searchbar";
 import Pagination from "@/components/shared/Pagination";
 
 import { fetchUser, fetchUsers } from "@/lib/actions/user.actions";
-import { Suspense } from "react";
-import Loading from "../loading";
 
 async function Page({
   searchParams,
@@ -15,11 +13,9 @@ async function Page({
 }) {
   const user = await currentUser();
   if (!user) return null;
-  console.log(searchParams);
 
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
-  console.log("hoooy");
 
   const result = await fetchUsers({
     userId: user.id,
