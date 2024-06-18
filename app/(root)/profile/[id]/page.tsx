@@ -7,6 +7,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import ThreadsTab from "@/components/shared/ThreadsTab";
 
+export const revalidate = 300;
 async function page({ params }: { params: { id: string } }) {
   const user = await currentUser();
 
